@@ -7,27 +7,50 @@
     <title>Portal</title>
 </head>
 <body>
-    <ul>
-        <p>
-            <h1>
-                Portal
-            </h1>
 
-            <form method="POST" action="{% url 'search' %}">
-                {% csrf_token %}
-                <input type="search" placeholder="buscar..." name="search">
-                <button type="submit">Search</button>
-            </form>
+    <p>
+        <h1>
+            Portal
+        </h1>
 
-        </p>
+        <form method="POST" action="{% url 'search' %}">
+            {% csrf_token %}
+            <input type="search" placeholder="buscar..." name="search">
+            <button type="submit">Search</button>
+        </form>
 
-        <br>
+    </p>
 
-        <!-- {% for aluno in alunos %}
-            <li>
-               {{aluno.matricula}} {{aluno.nome}}
-            </li>
-        {% endfor %} -->
-    </ul>
+    <p>
+        <a href=""></a>
+    </p>
+
+    <br>
+
+
+
+    <br>
+
+    <table>
+        <tr>
+            <th>
+                matrícula
+            </th>
+            <th>
+                nome
+            </th>
+        </tr>
+
+        {% for aluno in alunos %}
+        <tr>
+            <td>
+                {{ aluno.matricula }}
+            </td>
+            <td>
+                {{ aluno.nome }}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
 </body>
 </html>

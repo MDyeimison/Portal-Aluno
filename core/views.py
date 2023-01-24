@@ -5,7 +5,7 @@ from django.views import View
 from .models import Aluno
 
 from django.core.paginator import Paginator
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 
 
 # Create your views here.
@@ -37,8 +37,20 @@ def search(request):
     context = {
         'aluno':aluno
     }
-    print(context)
     return render(request, 'core/aluno.html', context)
+
+def edit(request, pk):
+    aluno = get_object_or_404(Aluno, pk=pk)
+    if request.method == 'POST':
+        render(request, 'core/edit.html', {'aluno':aluno})
+    return render(request, 'core/edit.html', {'aluno':aluno})
+
+def delete(request, pk):
+    aluno = get_object_or_404(Aluno, pk=pk)
+    if request.method == 'POST':
+        aluno.delete()
+        return redirect('/')
+    return render(request, 'core/aluno.html', {'aluno':aluno})
 
 
 """ class MyView(View):
