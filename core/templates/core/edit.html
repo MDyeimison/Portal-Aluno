@@ -7,6 +7,14 @@
     <title>Editar</title>
 </head>
 <body>
-    
+    <h1><a href="{% url 'index' %}">Portal</a></h1>
+    <form action="{% url 'editaluno' aluno.id %}" method="post">
+        {% csrf_token %}
+        <input type="text" name="nome" value="{{ aluno.nome }}">
+        <br><br>
+        <input type="number" name="matricula" value="{{ aluno.matricula }}">
+        <br><br>
+        <input type="submit" value="Submit">
+    </form>
 </body>
 </html>

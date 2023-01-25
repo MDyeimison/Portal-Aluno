@@ -4,13 +4,18 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .table-b {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+    </style>
     <title>Portal</title>
 </head>
 <body>
-
     <p>
         <h1>
-            Portal
+            Alunos
         </h1>
 
         <form method="POST" action="{% url 'search' %}">
@@ -20,37 +25,82 @@
         </form>
 
     </p>
+    
+    <p><a href="">Realizar matrícula</a></p>
 
-    <p>
-        <a href=""></a>
-    </p>
+    <br><br>
 
-    <br>
-
-
-
-    <br>
-
-    <table>
-        <tr>
-            <th>
-                matrícula
+    <table class="table-b">
+        <tr class="table-b">
+            <th class="table-b">
+                Matrícula
             </th>
-            <th>
-                nome
+            <th class="table-b">
+                Nome
             </th>
+            <th class="table-b">
+                Curso
+            </th>
+            <th>Ação</th>
         </tr>
 
-        {% for aluno in alunos %}
+        {% for aluno in page_obj %}
         <tr>
-            <td>
+            <td class="table-b">
                 {{ aluno.matricula }}
             </td>
-            <td>
+            <td class="table-b">
                 {{ aluno.nome }}
+            </td>
+            <td class="table-b">
+                {{ aluno.curso }}
+            </td>
+            <td class="table-b">
+                <table>
+                    <tr>
+                        <td>
+                            <form action="{% url 'student' aluno.id %}" method="post">
+                                {% csrf_token %}
+                                <input type="submit" name="student" value="view">
+                            </form>
+                        </td>
+                        <td>
+                            <form action="{% url 'edit' aluno.id %}" method='post'>
+                                {% csrf_token %}
+                                <input type="submit" name="edit" value="edit">
+                            </form>
+                        </td>
+                        <td>
+                            <form action="{% url 'delete' aluno.id %}" method='post'>
+                                {% csrf_token %}
+                                <input type="submit" name="delete" value="delete">
+                            </form>
+                        </td>
+                    </tr>
+                </table>
             </td>
         </tr>
         {% endfor %}
     </table>
+
+    <span>
+        <table>
+            <tr>
+                {% if page_obj.has_previous %}
+                <td>
+                    <a href="?page={{ page_obj.previous_page_number }}">Previous </a>
+                </td>
+                {% endif %}
+
+                {% if page_obj.has_next %}
+                <td>
+                    <a href="?page={{ page_obj.next_page_number }}">Next</a>
+                </td>
+                {% endif %}
+            </tr>
+        </table>
+        <br>
+        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+    </span>
 </body>
 </html>

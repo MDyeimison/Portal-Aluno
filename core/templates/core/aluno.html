@@ -9,37 +9,16 @@
 <body>
     <h1><a href="{% url 'index' %}">Portal</a></h1>
     <p>
-        {% for aluno in aluno %}
-            <table>
-                <tr>
-                    <td>matrícula:  {{aluno.matricula}}</td>
-                    <td>nome: {{ aluno.nome }}</td>
-                </tr>
-                <tr>
-                    <td>curso: {{aluno.curso}}</td>
-                    <td>situação: {{aluno.situacao}}</td>
-                </tr>
-            </table>
-
-                <table>
-                    <tr>
-                        <td>
-                            <form action="{% url 'edit' aluno.id %}" method='post'>
-                                {% csrf_token %}
-                                <input type="submit" name="edit" value="edit {{aluno.nome}}">
-                            </form>
-                        </td>
-                        <td>
-                            <form action="{% url 'delete' aluno.id %}" method='post'>
-                                {% csrf_token %}
-                                <input type="submit" name="delete" value="delete {{aluno.nome}}">
-                            </form>
-                        </td>
-                    </tr>
-                </table>
-
-            <br>
-        {% endfor %}
+        <table>
+            <tr>
+                <td>matrícula:  {{aluno.matricula}}</td>
+                <td>nome: {{ aluno.nome }}</td>
+            </tr>
+            <tr>
+                <td>curso: {{aluno.curso}}</td>
+                <td>situação: {{aluno.situacao}}</td>
+            </tr>
+        </table>
     </p>
 </body>
 </html>

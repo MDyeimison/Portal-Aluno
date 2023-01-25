@@ -8,5 +8,8 @@ urlpatterns = [
     path('aluno', views.search, name='search'),
     path('delete/<int:pk>', views.delete, name='delete'),
     path('edit/<int:pk>', views.edit, name='edit'),
-    #path('mine/', MyView.as_view(), name='my-view')
+    path('edit/editaluno/<int:pk>', views.editaluno, name='editaluno'),
+    path('student/<int:pk>', views.student, name='student'),
+    # path('register', views.register, name='register')
+    # path('mine/', MyView.as_view(), name='my-view')
 ]

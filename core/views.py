@@ -9,17 +9,17 @@ from django.shortcuts import get_object_or_404, redirect
 
 
 # Create your views here.
+""" def index(request):
+    aluno = Aluno.objects.all()
+    context = {'alunos':aluno}
+    return render(request, 'core/index.html', context) """
+
 def index(request):
     aluno = Aluno.objects.all()
-    #return HttpResponse('Hello man!')
-
-    for e in aluno: {
-        print(e.situacao)
-    }
-
-    print(aluno)
-    context = {'alunos':aluno}
-    return render(request, 'core/index.html', context)
+    paginator = Paginator(aluno, 2)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    return render(request, 'core/index.html', {'page_obj' : page_obj})
 
 def pags(request):
     aluno = Aluno.objects.all()
@@ -31,19 +31,34 @@ def pags(request):
 def search(request):
     if request.method == 'POST':
         nome = request.POST.get("search")
-        print(nome)
-    aluno = Aluno.objects.filter(nome=nome)
-    get_object_or_404(aluno)
+    aluno = Aluno.objects.filter(nome=nome).latest('nome')
+    #get_object_or_404(aluno)
     context = {
         'aluno':aluno
     }
     return render(request, 'core/aluno.html', context)
+
+def student(request, pk):
+    aluno = get_object_or_404(Aluno, pk=pk)
+    return render(request, 'core/aluno.html', {'aluno':aluno})
+
+""" def register(request): """
+    
 
 def edit(request, pk):
     aluno = get_object_or_404(Aluno, pk=pk)
     if request.method == 'POST':
         render(request, 'core/edit.html', {'aluno':aluno})
     return render(request, 'core/edit.html', {'aluno':aluno})
+
+def editaluno(request, pk):
+    nome = request.POST['nome']
+    matricula = request.POST['matricula']
+    aluno = get_object_or_404(Aluno, pk=pk)
+    aluno.nome = nome
+    aluno.matricula = matricula
+    aluno.save()
+    return redirect('/')
 
 def delete(request, pk):
     aluno = get_object_or_404(Aluno, pk=pk)
