@@ -10,7 +10,7 @@
             border-collapse: collapse;
         }
     </style>
-    <title>Portal</title>
+    <title>Alunos</title>
 </head>
 <body>
     <p>
@@ -26,7 +26,13 @@
 
     </p>
     
-    <p><a href="">Realizar matrícula</a></p>
+    <p><a href="{% url 'alunos-list' %}">Realizar matrícula</a></p>
+
+<!--     <br><br>
+
+    <form action="{% url 'alunos-list' %}">
+        <input type="submit" value="alunos-list">
+    </form> -->
 
     <br><br>
 

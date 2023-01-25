@@ -10,6 +10,10 @@ urlpatterns = [
     path('edit/<int:pk>', views.edit, name='edit'),
     path('edit/editaluno/<int:pk>', views.editaluno, name='editaluno'),
     path('student/<int:pk>', views.student, name='student'),
+
+    # CBV
+
+    path('alunos-list', views.AlunosList.as_view(), name='alunos-list' ),
     # path('register', views.register, name='register')
     # path('mine/', MyView.as_view(), name='my-view')
 ]

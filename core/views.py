@@ -2,10 +2,13 @@ from django.shortcuts import render
 
 from django.http import HttpResponse
 from django.views import View
+
 from .models import Aluno
 
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, redirect
+
+from django.views.generic import ListView
 
 
 # Create your views here.
@@ -16,7 +19,7 @@ from django.shortcuts import get_object_or_404, redirect
 
 def index(request):
     aluno = Aluno.objects.all()
-    paginator = Paginator(aluno, 2)
+    paginator = Paginator(aluno, 4)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     return render(request, 'core/index.html', {'page_obj' : page_obj})
@@ -66,6 +69,13 @@ def delete(request, pk):
         aluno.delete()
         return redirect('/')
     return render(request, 'core/aluno.html', {'aluno':aluno})
+
+
+class AlunosList(ListView):
+    model = Aluno
+    alunos = Aluno.objects.all()
+    template_name = 'core/alunos_list.html'
+    
 
 
 """ class MyView(View):
