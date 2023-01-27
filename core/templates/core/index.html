@@ -18,21 +18,28 @@
             Alunos
         </h1>
 
-        <form method="POST" action="{% url 'search' %}">
+        <form>
             {% csrf_token %}
             <input type="search" placeholder="buscar..." name="search">
             <button type="submit">Search</button>
         </form>
 
+        <p>
+            {% for aluno in alunos %}
+                <table>            
+                    <tr>
+                        <td>matrícula:  {{aluno.matricula}}</td>
+                        <td>nome: {{ aluno.nome }}</td>
+                    </tr>
+                    <tr>
+                        <td>curso: {{aluno.curso}}</td>
+                        <td>situação: {{aluno.situacao}}</td>
+                    </tr>
+                    <br>
+                </table>
+            {% endfor %}
+        </p>
     </p>
-    
-    <p><a href="{% url 'alunos-list' %}">Realizar matrícula</a></p>
-
-<!--     <br><br>
-
-    <form action="{% url 'alunos-list' %}">
-        <input type="submit" value="alunos-list">
-    </form> -->
 
     <br><br>
 
@@ -65,9 +72,10 @@
                 <table>
                     <tr>
                         <td>
-                            <form action="{% url 'student' aluno.id %}" method="post">
+                            <!-- <a href="{% url 'detail' aluno.id %}">details</a> -->
+                            <form action="{% url 'detail' aluno.id %}">
                                 {% csrf_token %}
-                                <input type="submit" name="student" value="view">
+                                <input type="submit" name="detail" value="view">
                             </form>
                         </td>
                         <td>
@@ -89,24 +97,22 @@
         {% endfor %}
     </table>
 
-    <span>
-        <table>
-            <tr>
-                {% if page_obj.has_previous %}
-                <td>
-                    <a href="?page={{ page_obj.previous_page_number }}">Previous </a>
-                </td>
-                {% endif %}
-
-                {% if page_obj.has_next %}
-                <td>
-                    <a href="?page={{ page_obj.next_page_number }}">Next</a>
-                </td>
-                {% endif %}
-            </tr>
-        </table>
-        <br>
-        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-    </span>
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+            {% endif %}
+    
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+    
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">next</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
 </body>
 </html>

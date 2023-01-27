@@ -1,52 +1,34 @@
 from django.shortcuts import render
 
-from django.http import HttpResponse
-from django.views import View
+from core.forms import AlunoForm
 
 from .models import Aluno
 
-from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, redirect
 
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView, TemplateView
+
+from core import models
 
 
 # Create your views here.
-""" def index(request):
-    aluno = Aluno.objects.all()
-    context = {'alunos':aluno}
-    return render(request, 'core/index.html', context) """
+class IndexView(ListView):
+    model = Aluno
+    template_name = 'core/index.html'
+    paginate_by = 2
 
-def index(request):
-    aluno = Aluno.objects.all()
-    paginator = Paginator(aluno, 4)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-    return render(request, 'core/index.html', {'page_obj' : page_obj})
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        name = self.request.GET.get('search')
+        if not name :
+            name = ""
+        context['alunos'] = self.model.objects.filter(nome__icontains=name)
+        return context
 
-def pags(request):
-    aluno = Aluno.objects.all()
-    paginator = Paginator(aluno, 2)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-    return render(request, 'core/lists.html', {'page_obj' : page_obj})
-
-def search(request):
-    if request.method == 'POST':
-        nome = request.POST.get("search")
-    aluno = Aluno.objects.filter(nome=nome).latest('nome')
-    #get_object_or_404(aluno)
-    context = {
-        'aluno':aluno
-    }
-    return render(request, 'core/aluno.html', context)
-
-def student(request, pk):
-    aluno = get_object_or_404(Aluno, pk=pk)
-    return render(request, 'core/aluno.html', {'aluno':aluno})
-
-""" def register(request): """
-    
+class StudentView(DetailView):
+    model = Aluno
+    template_name = 'core/aluno.html'
+    context_object_name = 'student'
 
 def edit(request, pk):
     aluno = get_object_or_404(Aluno, pk=pk)
@@ -69,15 +51,3 @@ def delete(request, pk):
         aluno.delete()
         return redirect('/')
     return render(request, 'core/aluno.html', {'aluno':aluno})
-
-
-class AlunosList(ListView):
-    model = Aluno
-    alunos = Aluno.objects.all()
-    template_name = 'core/alunos_list.html'
-    
-
-
-""" class MyView(View):
-    def get(self, request, *args, **kwargs):
-        return HttpResponse('Hello man!') """
