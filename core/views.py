@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.urls import reverse_lazy
 
 from core.forms import AlunoForm
 
@@ -6,7 +7,7 @@ from .models import Aluno
 
 from django.shortcuts import get_object_or_404, redirect
 
-from django.views.generic import ListView, DetailView, TemplateView
+from django.views.generic import ListView, DetailView, TemplateView, UpdateView
 
 from core import models
 
@@ -30,7 +31,14 @@ class StudentView(DetailView):
     template_name = 'core/aluno.html'
     context_object_name = 'student'
 
-def edit(request, pk):
+class StudentUpdate(UpdateView):
+    model = Aluno
+    form_class = AlunoForm
+    template_name = 'core/edit.html'
+    success_url = reverse_lazy('index')
+
+
+""" def edit(request, pk):
     aluno = get_object_or_404(Aluno, pk=pk)
     if request.method == 'POST':
         render(request, 'core/edit.html', {'aluno':aluno})
@@ -43,7 +51,7 @@ def editaluno(request, pk):
     aluno.nome = nome
     aluno.matricula = matricula
     aluno.save()
-    return redirect('/')
+    return redirect('/') """
 
 def delete(request, pk):
     aluno = get_object_or_404(Aluno, pk=pk)

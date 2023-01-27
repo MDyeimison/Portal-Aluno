@@ -79,9 +79,9 @@
                             </form>
                         </td>
                         <td>
-                            <form action="{% url 'edit' aluno.id %}" method='post'>
+                            <form action="{% url 'update' aluno.id %}">
                                 {% csrf_token %}
-                                <input type="submit" name="edit" value="edit">
+                                <input type="submit" name="student" value="edit">
                             </form>
                         </td>
                         <td>
