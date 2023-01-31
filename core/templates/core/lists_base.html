@@ -1,0 +1,55 @@
+    {% block liststudent %}
+    <table class="table-b">
+        <tr class="table-b">
+            <th class="table-b">
+                Matrícula
+            </th>
+            <th class="table-b">
+                Nome
+            </th>
+            <th class="table-b">
+                Curso
+            </th>
+            <th>Ação</th>
+        </tr>
+
+        {% for aluno in page_obj %}
+        <tr>
+            <td class="table-b">
+                {{ aluno.matricula }}
+            </td>
+            <td class="table-b">
+                {{ aluno.nome }}
+            </td>
+            <td class="table-b">
+                {{ aluno.curso }}
+            </td>
+            <td class="table-b">
+                <table>
+                    <tr>
+                        <td>
+                            <!-- <a href="{% url 'detail' aluno.id %}">details</a> -->
+                            <form action="{% url 'detail' aluno.id %}">
+                                {% csrf_token %}
+                                <input type="submit" name="detail" value="view">
+                            </form>
+                        </td>
+                        <td>
+                            <form action="{% url 'update' aluno.id %}">
+                                {% csrf_token %}
+                                <input type="submit" name="student" value="edit">
+                            </form>
+                        </td>
+                        <td>
+                            <form action="{% url 'delete' aluno.id %}">
+                                {% csrf_token %}
+                                <input type="submit" name="delete" value="delete">
+                            </form>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endblock %}

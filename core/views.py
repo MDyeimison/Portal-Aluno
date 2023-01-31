@@ -7,7 +7,7 @@ from .models import Aluno
 
 from django.shortcuts import get_object_or_404, redirect
 
-from django.views.generic import ListView, DetailView, TemplateView, UpdateView
+from django.views.generic import ListView, DetailView, TemplateView, UpdateView, CreateView, DeleteView
 
 from core import models
 
@@ -15,6 +15,7 @@ from core import models
 # Create your views here.
 class IndexView(ListView):
     model = Aluno
+    form_class = AlunoForm
     template_name = 'core/index.html'
     paginate_by = 2
 
@@ -22,9 +23,16 @@ class IndexView(ListView):
         context = super().get_context_data(**kwargs)
         name = self.request.GET.get('search')
         if not name :
-            name = ""
+            name = []
         context['alunos'] = self.model.objects.filter(nome__icontains=name)
         return context
+
+class RegisterView(CreateView):
+    model = Aluno
+    # form_class =
+    fields = '__all__'
+    # fields = ['nome', 'matricula', 'curso', 'semestreInicio', 'situacao']
+    success_url = reverse_lazy('index')
 
 class StudentView(DetailView):
     model = Aluno
@@ -33,29 +41,13 @@ class StudentView(DetailView):
 
 class StudentUpdate(UpdateView):
     model = Aluno
-    form_class = AlunoForm
-    template_name = 'core/edit.html'
+    """ form_class = AlunoForm """
+    fields = ['nome', 'matricula', 'curso', 'semestreInicio', 'situacao']
+    template_name_suffix = '_update_form'
+    """ template_name = 'core/edit.html' """
     success_url = reverse_lazy('index')
 
-
-""" def edit(request, pk):
-    aluno = get_object_or_404(Aluno, pk=pk)
-    if request.method == 'POST':
-        render(request, 'core/edit.html', {'aluno':aluno})
-    return render(request, 'core/edit.html', {'aluno':aluno})
-
-def editaluno(request, pk):
-    nome = request.POST['nome']
-    matricula = request.POST['matricula']
-    aluno = get_object_or_404(Aluno, pk=pk)
-    aluno.nome = nome
-    aluno.matricula = matricula
-    aluno.save()
-    return redirect('/') """
-
-def delete(request, pk):
-    aluno = get_object_or_404(Aluno, pk=pk)
-    if request.method == 'POST':
-        aluno.delete()
-        return redirect('/')
-    return render(request, 'core/aluno.html', {'aluno':aluno})
+class StudentDelete(DeleteView):
+    model = Aluno
+    template_name_suffix = '_confirm_delete'
+    success_url = reverse_lazy('index')
