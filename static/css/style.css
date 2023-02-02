@@ -1,0 +1,13 @@
+body {
+    background: #679289;
+
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+}
+
+footer {
+    margin-top: auto;
+    color: #333;
+}
