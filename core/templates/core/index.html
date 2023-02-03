@@ -1,69 +1,28 @@
 {% extends 'core/base.html' %}
 
+{% block title %}
+    <title>Alunos</title>
+{% endblock %}
+
+{% block search %}
+    <a href="{% url 'register' %}">Register</a>
+
+    <form class="d-flex" action="{% url 'list' %}" role="search">
+        {% csrf_token %}
+        <i class="bi bi-search"></i>
+        <input class="form-control me-2" type="search" placeholder="buscar..." aria-label="Search" name="search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+    </form>
+{% endblock %}
+
 {% block content %}
 
-    <div class="container">
-        {% if alunos%}
-            <table class="table bg-body-tertiary table-sm">
-                <tr>
-                    <th>
-                        Matrícula
-                    </th>
-                    <th>
-                        Nome
-                    </th>
-                    <th>
-                        Curso
-                    </th>
-                    <th>Ação</th>
-                </tr>
-        
-                {% for aluno in alunos %}
-                <tr>
-                    <td>
-                        {{ aluno.matricula }}
-                    </td>
-                    <td>
-                        {{ aluno.nome }}
-                    </td>
-                    <td>
-                        {{ aluno.curso }}
-                    </td>
-                    <td>
-                        <table>
-                            <tr>
-                                <td>
-                                    <form  action="{% url 'detail' aluno.id %}">
-                                        {% csrf_token %}
-                                        <!-- <input type="button" name="detail" value="view"> -->
-                                        <button class="btn btn-outline-primary" type="submit" name="detail">view</button>
-                                    </form>
-                                </td>
-                                <td>
-                                    <form action="{% url 'update' aluno.id %}">
-                                        {% csrf_token %}
-                                        <!-- <input type="button" name="student" value="edit"> -->
-                                        <button class="btn btn-outline-primary" type="submit" name="student">edit</button>
-                                    </form>
-                                </td>
-                                <td>
-                                    <form action="{% url 'delete' aluno.id %}">
-                                        {% csrf_token %}
-                                        <!-- <input type="button" name="delete" value="delete"> -->
-                                        <button class="btn btn-outline-primary" type="submit" name="delete">delete</button>
-                                    </form>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-                {% endfor %}
-            </table>
-        {% endif %}
-    </div>
+    
+
     <br>
+
     <div class="container">   
-        <table class="table bg-body-tertiary table-sm">
+        <table class="table bg-body-tertiary table-sm rounded">
             <tr>
                 <th>
                     Matrícula
@@ -89,27 +48,27 @@
                         {{ aluno.curso }}
                     </td>
                     <td>
-                        <table>
+                        <table class="rounded-bottom">
                             <tr>
                                 <td>
                                     <form action="{% url 'detail' aluno.id %}">
                                         {% csrf_token %}
                                         <!-- <input type="submit" name="detail" value="view"> -->
-                                        <button class="btn btn-outline-primary" type="submit" name="detail">view</button>
+                                        <button class="btn btn-info" type="submit" name="detail">view</button>
                                     </form>
                                 </td>
                                 <td>
                                     <form action="{% url 'update' aluno.id %}">
                                         {% csrf_token %}
                                         <!-- <input type="submit" name="student" value="edit"> -->
-                                        <button class="btn btn-outline-primary" type="submit" name="student">edit</button>
+                                        <button class="btn btn-success" type="submit" name="student">edit</button>
                                     </form>
                                 </td>
                                 <td>
                                     <form action="{% url 'delete' aluno.id %}">
                                         {% csrf_token %}
                                         <!-- <input type="submit" name="delete" value="delete"> -->
-                                        <button class="btn btn-outline-primary" type="submit" name="delete">delete</button>
+                                        <button class="btn btn-danger" type="submit" name="delete">delete</button>
                                     </form>
                                 </td>
                             </tr>
@@ -121,39 +80,41 @@
     </div>
     </div>
     <footer>
-    <table>
-        <div id="botton-pagination">
-            <nav>
-                <ul class="pagination">
-                    {% if page_obj.has_previous %}
-                        {% if page_obj.number > 2 %}
-                            <li class="page-item">
-                                <a class="page-link" href="?page=1">&laquo; first</a>
+        <div class="center">
+            <table>
+                <div id="botton-pagination">
+                    <nav>
+                        <ul class="pagination">
+                            {% if page_obj.has_previous %}
+                                {% if page_obj.number > 2 %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page=1">&laquo; first</a>
+                                    </li>
+                                {% endif %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">previous</a>
+                                </li>
+                            {% endif %}
+                    
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#">
+                                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                                </a>
                             </li>
-                        {% endif %}
-                        <li class="page-item">
-                            <a class="page-link" href="?page={{ page_obj.previous_page_number }}">previous</a>
-                        </li>
-                    {% endif %}
-            
-                    <li class="page-item disabled">
-                        <a class="page-link" href="#">
-                        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-                        </a>
-                    </li>
-            
-                    {% if page_obj.has_next %}
-                        <li class="page-item">
-                            <a class="page-link" href="?page={{ page_obj.next_page_number }}">next</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
-                        </li>
-                    {% endif %}
-                </ul>
-            </nav>
+                    
+                            {% if page_obj.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">next</a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                </div>
+            </table>
         </div>
-    </table>
     </footer>
 
 {% endblock %}

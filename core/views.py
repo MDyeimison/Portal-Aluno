@@ -17,7 +17,11 @@ class IndexView(ListView):
     model = Aluno
     form_class = AlunoForm
     template_name = 'core/index.html'
-    paginate_by = 4
+    paginate_by = 8
+    
+class StudentList(ListView):
+    model = Aluno
+    template_name = 'core/aluno_list.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

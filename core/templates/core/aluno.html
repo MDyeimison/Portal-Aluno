@@ -1,25 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% extends 'core/base.html' %}
+
+{% block title %}
     <title>Aluno</title>
-</head>
-<body>
-    <h1><a href="{% url 'index' %}">Portal</a></h1>
-    <p>
-            <table>            
-                <tr>
-                    <td>matrícula:  {{student.matricula}}</td>
-                    <td>nome: {{ student.nome }}</td>
-                </tr>
-                <tr>
-                    <td>curso: {{student.curso}}</td>
-                    <td>situação: {{student.situacao}}</td>
-                </tr>
-                <br><br>
-            </table>
-    </p>
-</body>
-</html>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <ul class="list-group">
+            <li class="list-group-item">Matrícula:  {{student.matricula}}</li>
+            <li class="list-group-item">Nome: {{ student.nome }}</li>
+            <li class="list-group-item">Curso: {{student.curso}}</li>
+            <li class="list-group-item">Situação: {{student.situacao}}</li>
+        </ul>
+    </div>
+{% endblock %}

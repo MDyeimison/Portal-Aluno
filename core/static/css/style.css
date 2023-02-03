@@ -1,13 +1,17 @@
 body {
     background: #679289;
-
     min-height: 100vh;
-
     display: flex;
     flex-direction: column;
 }
 
 footer {
+    background: #333;
     margin-top: auto;
-    color: #333;
+    padding: 20px;
+}
+
+.center {
+    margin: auto;
+    width: 30%;
 }

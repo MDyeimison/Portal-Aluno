@@ -1,0 +1,76 @@
+{% extends 'core/base.html' %}
+
+{% block title %}
+    <title>Aluno List</title>
+{% endblock %}
+
+{% block search %}
+    <form class="d-flex" role="search">
+        {% csrf_token %}
+        <i class="bi bi-search"></i>
+        <input class="form-control me-2" type="search" placeholder="buscar..." aria-label="Search" name="search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+    </form>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        {% if alunos%}
+            <table class="table bg-body-tertiary table-sm rounded">
+                <tr>
+                    <th>
+                        Matrícula
+                    </th>
+                    <th>
+                        Nome
+                    </th>
+                    <th>
+                        Curso
+                    </th>
+                    <th>Ação</th>
+                </tr>
+        
+                {% for aluno in alunos %}
+                    <tr>
+                        <td>
+                            {{ aluno.matricula }}
+                        </td>
+                        <td>
+                            {{ aluno.nome }}
+                        </td>
+                        <td>
+                            {{ aluno.curso }}
+                        </td>
+                        <td>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <form action="{% url 'detail' aluno.id %}">
+                                            {% csrf_token %}
+                                            <!-- <input type="submit" name="detail" value="view"> -->
+                                            <button class="btn btn-info" type="submit" name="detail">view</button>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <form action="{% url 'update' aluno.id %}">
+                                            {% csrf_token %}
+                                            <!-- <input type="submit" name="student" value="edit"> -->
+                                            <button class="btn btn-success" type="submit" name="student">edit</button>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <form action="{% url 'delete' aluno.id %}">
+                                            {% csrf_token %}
+                                            <!-- <input type="submit" name="delete" value="delete"> -->
+                                            <button class="btn btn-danger" type="submit" name="delete">delete</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
+    </div>
+{% endblock %}

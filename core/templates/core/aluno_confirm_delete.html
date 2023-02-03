@@ -1,18 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Delete</title>
-</head>
-<body>
-    <h1>Delete</h1>
+{% extends 'core/base.html' %}
 
-    <form method="post">{% csrf_token %}
-        <p>Are you sure you want to delete "{{ object }}"?</p>
-        {{ form }}
-        <input type="submit" value="Confirm">
-    </form>
-</body>
-</html>
+{% block title %}
+    <title>Delete</title>
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <p><h3>Are you sure you want to delete "{{ object }}"?</h3></p>
+
+        <table>
+            <tr>
+                <td><form method="post">{% csrf_token %}
+                    {{ form }}
+                    <input type="submit" class="btn btn-danger" value="Confirm">
+                </form></td>
+                <td><form action="{% url 'index' %}">{% csrf_token %}
+                    <input type="submit" class="btn btn-success" value="Cancel">
+                </form></td>
+            </tr>
+        </table>
+    </div>
+{% endblock %}

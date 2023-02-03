@@ -9,4 +9,5 @@ urlpatterns = [
     path('update/<int:pk>', views.StudentUpdate.as_view(), name='update'),
     path('register', views.RegisterView.as_view(), name='register'),
     path('delete/<int:pk>', views.StudentDelete.as_view(), name='delete'),
+    path('aluno-list', views.StudentList.as_view(), name='list')
 ]
