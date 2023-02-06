@@ -33,7 +33,7 @@ class StudentList(ListView):
 
 class RegisterView(CreateView):
     model = Aluno
-    # form_class =
+    # form_class = AlunoForm
     fields = '__all__'
     # fields = ['nome', 'matricula', 'curso', 'semestreInicio', 'situacao']
     success_url = reverse_lazy('index')

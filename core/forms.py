@@ -8,5 +8,9 @@ class AlunoForm(forms.ModelForm):
         fields = '__all__'
 
 """ widget = {
-    'nome' : forms.TextInput(attrs={'class':'form-control'})
+    'nome': forms.TextInput(attrs={'class':'form-control'}),
+    'matricula': forms.TextInput(attrs={'class':'form-control'}),
+    'curso': forms.Select(attrs={'class':'form-control'}),
+    'semestreInicio': forms.TextInput(attrs={'class':'form-control'}),
+    'situacao': forms.Select(attrs={'class':'form-control'}),
 } """
