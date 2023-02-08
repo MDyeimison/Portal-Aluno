@@ -1,3 +1,4 @@
+import uuid
 from django.db import models
 from django.core.validators import MinLengthValidator
 
@@ -26,6 +27,7 @@ class Curso(models.Model):
         return f'{self.codigo} - {self.nome}'
 
 class Aluno(models.Model):
+    id = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False)
     nome = models.CharField('Nome do Aluno', max_length=255)
     matricula = models.CharField('Matrícula do aluno', max_length=11, unique = True, validators=[MinLengthValidator(11)])
     curso = models.ForeignKey(Curso, on_delete=models.CASCADE, verbose_name = 'Curso')

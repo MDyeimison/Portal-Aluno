@@ -17,7 +17,7 @@ class IndexView(ListView):
     model = Aluno
     form_class = AlunoForm
     template_name = 'core/index.html'
-    paginate_by = 8
+    paginate_by = 10
     
 class StudentList(ListView):
     model = Aluno
@@ -28,7 +28,7 @@ class StudentList(ListView):
         name = self.request.GET.get('search')
         if not name :
             name = []
-        context['alunos'] = self.model.objects.filter(nome__icontains=name)
+        context['alunos'] = self.model.objects.filter(nome__startswith=name)
         return context
 
 class RegisterView(CreateView):
@@ -43,6 +43,9 @@ class StudentView(DetailView):
     template_name = 'core/aluno.html'
     context_object_name = 'student'
 
+    def get_object(self):
+        return Aluno.objects.get(pk=self.kwargs['id'])
+
 class StudentUpdate(UpdateView):
     model = Aluno
     """ form_class = AlunoForm """
@@ -51,7 +54,13 @@ class StudentUpdate(UpdateView):
     """ template_name = 'core/edit.html' """
     success_url = reverse_lazy('index')
 
+    def get_object(self):
+        return Aluno.objects.get(pk=self.kwargs['id'])
+
 class StudentDelete(DeleteView):
     model = Aluno
     template_name_suffix = '_confirm_delete'
     success_url = reverse_lazy('index')
+
+    def get_object(self):
+        return Aluno.objects.get(pk=self.kwargs['id'])

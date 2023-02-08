@@ -1,5 +1,5 @@
 {% extends 'core/base.html' %}
-{% load crispy_forms_tags %}
+{% load bootstrap4 %}
 
 {% block title %}
     <title>Register</title>
@@ -9,9 +9,11 @@
 <div class="container">
     <form method="post">
         {% csrf_token %}
-        {{ form|crispy }}
+        {% bootstrap_form form %}
         <br>
-        <input type="submit" class="btn btn-success" value="Save">
+        {% buttons %}
+            <input type="submit" class="btn btn-success" value="Save">
+        {% endbuttons %}
     </form>
 </div>
 {% endblock %}
