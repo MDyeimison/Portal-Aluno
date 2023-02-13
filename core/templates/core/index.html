@@ -1,17 +1,20 @@
 {% extends 'core/base.html' %}
+{% load bootstrap4 %}
 
 {% block title %}
     <title>Alunos</title>
 {% endblock %}
 
 {% block search %}
-    <a href="{% url 'register' %}">Register</a>
+    <form class="d-flex" action="{% url 'register' %}">
+        <button class="btn btn-outline-success" type="submit"><i class="fa-sharp fa-solid fa-user"></i>Register</button>
+    </form>
+    <!-- <a href="{% url 'register' %}">Register</a> -->
 
     <form class="d-flex" action="{% url 'list' %}" role="search">
         {% csrf_token %}
-        <i class="bi bi-search"></i>
         <input class="form-control me-2" type="search" placeholder="buscar..." aria-label="Search" name="search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
+        <button class="btn btn-outline-success" type="submit"><i class="fa-sharp fa-solid fa-magnifying-glass"></i></button>
     </form>
 {% endblock %}
 
@@ -19,7 +22,7 @@
     <br>
 
     <div class="container">   
-        <table class="table bg-body-tertiary table-sm rounded">
+        <table class="table rounded">
             <tr>
                 <th>
                     Matrícula

@@ -1,6 +1,8 @@
 import uuid
 from django.db import models
 from django.core.validators import MinLengthValidator
+from django.core.exceptions import ValidationError
+from random import randint
 
 # Create your models here.
 class Situacao(models.Model):
@@ -43,3 +45,14 @@ class Aluno(models.Model):
 
     def __str__(self):
         return self.nome
+    
+    def clean(self):
+        if not len(self.nome) > 5:
+            raise ValidationError({"nome":"cant be used as a name"})
+        
+        if (int(self.semestreInicio[2]) > 2) | (int(self.semestreInicio[1]) > 2):
+            raise ValidationError({"semestreInicio":"invalid semestre"})
+        
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        return super().save(*args, **kwargs)
